@@ -1,0 +1,6 @@
+name: Backup
+version: '${version}'
+
+main: me.DesDaugtMa.backup.Backup
+api-version: '26.2'
+load: STARTUP
