@@ -40,6 +40,17 @@ Format je Eintrag: **Thema** – Entscheidung. *Warum.* (Quelle, Datum)
     Auslöser, Dauer, Warnungen.
 - **Threading Config-Laden** – Initiales Laden in `onEnable` darf synchron laufen (keine Spieler online);
   Reload liest/schreibt asynchron und übernimmt den Snapshot auf dem Main-Thread. (Nutzerentscheidung 2026-10-29, Issue #1)
+- **Server leer während Backups** – Während ein Backup läuft, ist ausnahmslos niemand online (auch keine OPs,
+  **keine** Bypass-Permission). Der Lockdown existiert **nur** als Teil eines Backup-Vorgangs, nie eigenständig
+  (Nutzer hat einen separaten `/backup lockdown`-Command ausdrücklich abgelehnt). *Konsistente Vollbackups.*
+  (Nutzerentscheidung 2026-10-29, Issue #2)
+- **Server-Stop hat Vorrang vor Backups** – `onDisable` wartet nie auf ein laufendes Backup; ein Neustart
+  unterbricht es. Kein Timeout für hängende Backups, kein persistierter Sperrzustand. (Nutzerentscheidung 2026-10-29, Issue #2)
+- **Command-Syntax Backup** – `/backup <Sekunden>` (Pflichtzahl 0–3600) startet ein Backup mit Countdown;
+  `/backup` ohne Argument bleibt die Hilfe. Permissions je Aktion getrennt (`backup.admin.create|cancel|status`).
+  (Nutzerentscheidung 2026-10-29, Issue #2)
+- **Ausnahme „leer = deaktiviert"** – Gilt nicht für Texte, die zwingend angezeigt werden müssen (Kick-Screen,
+  Join-Fail-Screen): leer → eingebauter Standardtext + WARN. (Nutzerentscheidung 2026-10-29, Issue #2)
 - **GitHub-Labels** – GitHub-Standardlabels (`enhancement`, `bug`, `documentation` …), keine eigenen
   Bereichslabels. (Nutzerentscheidung 2026-10-29)
 
