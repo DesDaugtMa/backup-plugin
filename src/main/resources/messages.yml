@@ -1,0 +1,33 @@
+# ------------------------------------------------------------
+#  Backup – Nachrichten
+# ------------------------------------------------------------
+# Format: MiniMessage (https://docs.advntr.dev/minimessage/format.html)
+# Ein leerer Text ("") deaktiviert die jeweilige Nachricht.
+# Änderungen werden mit /backup reload übernommen.
+
+# Interne Version dieser Datei. NICHT manuell ändern.
+config-version: 1
+
+# Wird vor jede Nachricht gesetzt. "" = kein Präfix.
+prefix: "<dark_aqua>Backup »</dark_aqua> "
+
+# Spieler hat keine Berechtigung.
+no-permission: "<red>Dafür hast du keine Berechtigung.</red>"
+
+help:
+  # Überschrift der Hilfe (/backup).
+  header: "<gray>Verfügbare Befehle:</gray>"
+  # Eine Zeile je Befehl. Platzhalter: <command>, <description>
+  entry: "<aqua><command></aqua> <dark_gray>–</dark_gray> <gray><description></gray>"
+  # Beschreibung von /backup reload in der Hilfe.
+  reload-description: "Lädt Konfiguration und Nachrichten neu"
+
+reload:
+  # Reload erfolgreich, keine Warnungen.
+  success: "<green>Konfiguration neu geladen.</green>"
+  # Reload erfolgreich mit Warnungen. Platzhalter: <warnings>
+  success-with-warnings: "<yellow>Konfiguration neu geladen (<warnings> Warnungen – Details in der Konsole).</yellow>"
+  # Reload fehlgeschlagen, alte Einstellungen bleiben aktiv. Platzhalter: <file>
+  failed: "<red>Neuladen fehlgeschlagen: <file> ist fehlerhaft. Die bisherigen Einstellungen bleiben aktiv – Details in der Konsole.</red>"
+  # Es läuft bereits ein Reload.
+  already-running: "<yellow>Es wird bereits neu geladen, bitte warten.</yellow>"

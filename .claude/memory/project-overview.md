@@ -3,8 +3,9 @@
 ## Plugin
 - **Name:** Backup (Paper-Plugin für Minecraft Java Edition)
 - **Zweck:** laut Name ein Backup-Plugin; der genaue Funktionsumfang wird über Issues definiert.
-- **Aktueller Feature-Stand (2026-10-03):** leeres Grundgerüst aus dem IntelliJ-Minecraft-Template.
-  `Backup.java` enthält nur leere `onEnable`/`onDisable`. Keine `config.yml`, keine Commands, keine Listener.
+- **Aktueller Feature-Stand (2026-10-30):** Konfigurations-Grundlage aus Issue #1: `config.yml` + `messages.yml`
+  (Validierung, Ergänzen mit `.bak`, Migrationsgerüst), `PluginLogger` mit Debug-Modus, `/backup` (Hilfe) und
+  `/backup reload`. Noch keine Backup-Fachfunktion (nächstes Issue: #2).
 
 ## Umgebung (Stand 2026-10-03)
 - Paper-API `26.2.build.+`, `api-version: '26.2'`, `load: STARTUP` in `plugin.yml`.
@@ -15,15 +16,10 @@
   Beim Aktualisieren von Gradle-Plugins immer die Mindest-Gradle-Version prüfen.
 - Gradle-Plugin `xyz.jpenilla.run-paper` ist eingebunden – `runServer` darf laut Agentenregeln **nie** ausgeführt
   werden.
-- **Bekannte Umgebungs-Lücken (2026-10-03):**
-  - Es existieren **keine** Wrapper-Skripte (`gradlew`, `gradlew.bat`, `gradle-wrapper.jar`) – nur die
-    `gradle-wrapper.properties`.
-  - Gradle 9 braucht zum Starten selbst mindestens Java 17. Ist kein passendes `JAVA_HOME` gesetzt, den Build in
-    Bash so aufrufen: `JAVA_HOME="/c/Users/Alex/.jdks/ms-25.0.4.1" ./gradlew build`.
-  - Kein `gradle` im PATH der Agenten-Shell; auf dem PATH liegt nur JDK 11 (Toolchain verlangt 25, kein
-    Foojay-Resolver in `settings.gradle.kts`).
-  → Vor dem ersten Build klären (siehe Regel 5 in `CLAUDE.md`). Diesen Abschnitt aktualisieren, sobald
-    behoben.
+- **Build (Stand 2026-10-30):** Der Gradle-Wrapper 9.8.0 liegt im Repo (`gradlew`, `gradlew.bat`,
+  `gradle-wrapper.jar`; Nutzerentscheidung 2026-10-30). Auf dem PATH liegt nur JDK 11, Gradle 9 braucht aber
+  mindestens Java 17. Deshalb in Bash immer: `JAVA_HOME="/c/Users/Alex/.jdks/ms-25.0.4.1" ./gradlew build`. Die
+  Toolchain 25 wird ohne Foojay-Resolver lokal gefunden. Python ist in der Agenten-Shell nicht verfügbar.
 
 ## GitHub (Stand 2026-10-03)
 - Remote `origin`: `https://github.com/DesDaugtMa/backup-plugin` (öffentlich), Default-Branch `main`.

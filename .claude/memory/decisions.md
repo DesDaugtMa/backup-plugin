@@ -8,6 +8,11 @@ Format je Eintrag: **Thema** – Entscheidung. *Warum.* (Quelle, Datum)
   Fixes (Patch wird auf 0 gesetzt); Patch für Bugfixes. Abgrenzung „Fix" vs. „Bugfix": siehe
   `.claude/skills/changelog/SKILL.md`. Einzige Versionsquelle: `gradle.properties`.
   (Nutzervorgabe, 2026-10-03)
+- **Startversion** – Der erste Funktionsstand (Issue #1) ist `1.0.0`; das leere Template hat keinen eigenen
+  Eintrag. Ab dann wird nach Schema gezählt. (Nutzerentscheidung 2026-10-30)
+- **Git-Workflow** – Commits direkt auf `main` (kein Branch pro Issue). Commit-Messages: kurzer deutscher Betreff im
+  Freitext, optional Stichpunkt-Body, bei Issues am Ende `Closes #<nr>`. Nach jedem Versions-Commit ein Tag
+  `v<Version>` (z. B. `v1.0.0`), mit dem Commit gepusht – nur mit Zustimmung zum Commit. (Nutzerentscheidung 2026-10-30)
 - **Tests** – Keine Laufzeittests, keine Unit-Tests, kein `runServer`. Einzige Verifikation: fehlerfreier Build.
   (Nutzervorgabe, 2026-10-03)
 - **Fragen** – Agenten fragen interaktiv (AskUserQuestion), so lange, bis alles klar ist. (Nutzervorgabe, 2026-10-03)
@@ -25,8 +30,16 @@ Format je Eintrag: **Thema** – Entscheidung. *Warum.* (Quelle, Datum)
 - **Command-API** – Paper-Brigadier über Lifecycle-Manager. Haupt-Command `/backup`, **kein** Alias. `/backup`
   ohne Subcommand = Hilfe, gefiltert nach Permissions. (Nutzerentscheidung 2026-10-29, Issue #1)
 - **Permission-Schema** – Präfix `backup.`; Admin-Aktionen als `backup.admin.<aktion>` (Default `op`) mit
-  Elternknoten `backup.admin`. Unberechtigte bekommen die Plugin-Meldung `no-permission` statt eines versteckten
-  Subcommands (Subcommand nur in Tab-Completion ausgeblendet). (Nutzerentscheidung 2026-10-29, Issue #1)
+  Elternknoten `backup.admin`. (Nutzerentscheidung 2026-10-29, Issue #1)
+- **Subcommand-Rechte über Brigadier-`requires()`** – Subcommands sind per `requires(permission)` abgesichert:
+  Unberechtigte sehen sie nicht in der Tab-Completion und bekommen beim Ausführen die Vanilla-Meldung „Unbekannter
+  oder unvollständiger Befehl". Nur `/backup` ohne Subcommand (Hilfe) meldet `no-permission`, wenn der Auslöser
+  keine einzige Backup-Permission hat. *Brigadier kann Literale nicht gleichzeitig verstecken und für Unberechtigte
+  ausführbar halten; typisierte Argumente (z. B. `/backup <Sekunden>` aus #2) bleiben so sauber möglich.*
+  Ersetzt die frühere Vorgabe „Plugin-Meldung statt verstecktem Subcommand". (Nutzerentscheidung 2026-10-30, Issue #1)
+- **MiniMessage-Validierung** – Ungültig (→ eingebauter Default + WARN) sind unbekannte Tags (Tippfehler), Tags mit
+  ungültigen Argumenten und Platzhalter, die es in der jeweiligen Nachricht nicht gibt. Nicht geschlossene Tags und
+  `<reset>` sind erlaubt (kein Strict-Mode). (Nutzerentscheidung 2026-10-30, Issue #1)
 - **Logger-Basis** – `getComponentLogger()`. (Nutzerentscheidung 2026-10-29, Issue #1)
 - **Config-Dateien – Grundsätze (gelten für alle künftigen Dateien/Schlüssel)** (Nutzerentscheidung 2026-10-29, Issue #1):
   - Jede Datei hat einen eigenen `config-version`-Key und wird unabhängig migriert.
@@ -57,5 +70,3 @@ Format je Eintrag: **Thema** – Entscheidung. *Warum.* (Quelle, Datum)
 ## Offen – beim ersten relevanten Anlass interaktiv klären und hierher verschieben
 
 - [ ] Folia-Unterstützung ja/nein (in Issue #1 bewusst Out of Scope)
-- [ ] Git-Workflow: Commit-Message-Konvention (z. B. Conventional Commits), Branch pro Issue ja/nein, Git-Tags pro Version ja/nein
-- [ ] Startversion: Wird der erste Feature-Stand als `1.0.0` veröffentlicht oder direkt hochgezählt?

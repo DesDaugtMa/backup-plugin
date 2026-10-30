@@ -4,3 +4,13 @@ version: '${version}'
 main: me.DesDaugtMa.backup.Backup
 api-version: '26.2'
 load: STARTUP
+
+permissions:
+  backup.admin:
+    description: Sammel-Permission für alle Admin-Aktionen des Backup-Plugins
+    default: op
+    children:
+      backup.admin.reload: true
+  backup.admin.reload:
+    description: Erlaubt /backup reload
+    default: op

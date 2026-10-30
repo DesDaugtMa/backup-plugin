@@ -1,0 +1,14 @@
+# ------------------------------------------------------------
+#  Backup – Konfiguration
+# ------------------------------------------------------------
+# Änderungen werden mit /backup reload übernommen.
+
+# Interne Version dieser Datei. NICHT manuell ändern –
+# sie wird vom Plugin bei Updates automatisch angepasst.
+config-version: 1
+
+logging:
+  # Aktiviert ausführliche Debug-Ausgaben in der Konsole (true/false).
+  # Nur zur Fehlersuche einschalten – erzeugt deutlich mehr Log-Ausgaben.
+  # Standard: false
+  debug: false
